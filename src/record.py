@@ -34,13 +34,12 @@ def on_release_key(_):
     stream.close()
     stream = None
 
-    wf = wave.open('resources/output.wav', 'wb')
-    wf.setnchannels(MIC_CHANNELS)
-    wf.setsampwidth(p.get_sample_size(pyaudio.paInt16))
-    wf.setframerate(MIC_SAMPLING_RATE)
-    wf.writeframes(b''.join(frames))
-    wf.close()
-
+    wav = wave.open('resources/output.wav', 'wb')
+    wav.setnchannels(MIC_CHANNELS)
+    wav.setsampwidth(p.get_sample_size(pyaudio.paInt16))
+    wav.setframerate(MIC_SAMPLING_RATE)
+    wav.writeframes(b''.join(frames))
+    wav.close()
     data = speech_text()
 
 if __name__ == '__main__':
