@@ -14,7 +14,7 @@ TARGET_KEY = getenv('TARGET_KEY')
 
 
 
-def on_press_key(_):
+def recording(_):
     global frames, recording, stream
     if not recording:
         frames = []
@@ -26,7 +26,7 @@ def on_press_key(_):
                         frames_per_buffer=1024,
                         input_device_index=1)
 
-def on_release_key(_):
+def stop_recording(_):
     print("Stop Recording")
     global recording, stream
     recording = False
@@ -53,7 +53,7 @@ if __name__ == '__main__':
     stream = None
 
     keyboard.on_press_key('f', on_press_key)
-    keyboard.on_release_key('f', on_release_key)
+    keyboard.on_press_key('s', on_release_key)
 
     try:
         while True:
