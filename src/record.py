@@ -1,3 +1,4 @@
+import time
 import pyaudio
 import keyboard
 from dotenv import load_dotenv
@@ -6,6 +7,8 @@ import wave
 from time import sleep
 
 from modules.Speech_Text import speech_text
+from modules.translate import translate_text
+from modules.voicevox import voicevox
 
 
 load_dotenv
@@ -27,7 +30,7 @@ def on_press_key(_):
                         input_device_index=1)
 
 def on_release_key(_):
-    print("Stop Recording")
+    print("Processing Recording")
     global recording, stream
     recording = False
     stream.stop_stream()
@@ -41,6 +44,9 @@ def on_release_key(_):
     wav.writeframes(b''.join(frames))
     wav.close()
     data = speech_text()
+    translate = translate_text(data)
+    voicevox(translate)
+    
 
 if __name__ == '__main__':
     p = pyaudio.PyAudio()
@@ -52,8 +58,9 @@ if __name__ == '__main__':
     recording = False
     stream = None
 
+    print('Program Running')
     keyboard.on_press_key('f', on_press_key)
-    keyboard.on_press_key('`', on_release_key)
+    keyboard.on_release_key('f', on_release_key)
 
     try:
         while True:
